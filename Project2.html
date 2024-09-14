@@ -1,0 +1,193 @@
+<html>
+<head>
+    <title>Mini Game</title>
+</head>
+<style>
+
+        /* Table 2 CSS */
+
+        .table1 {
+            border-collapse: collapse; /* Ensure that the borders of table cells would be collapsed into a single border */
+            width: 800px
+        }
+
+        .table1 td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .table1 h1,
+        .table1 h2 {
+            margin: 0; /* It sets the top and bottom margins of an element to 0 and centers it horizontally within its parent element. */
+        }
+
+      
+        
+
+
+
+</style>
+
+<body>
+
+
+    <table class = "table1">
+        <tr>
+            <td colspan = "6" style="background-color: #F7CAAC; height: 70px;" >
+                <h1>Part 2: Game</h1>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="background-color: #DEEAF6; text-align: left; height: 70px; width: 200px;">
+                <b>Your chosen alphabet: </b>
+                <span id="alphabet"></span>
+            </td>
+
+            <td colspan="2" style="background-color: #DEEAF6; width: 200px ">
+                <select style="width: 100px;" id="alphabetSelect" name="alphabetSelect" >
+                    <option value="A" selected>A</A></option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="H">H</option>
+                    <option value="I">I</option>
+                    <option value="J">J</option>
+                    <option value="K">K</option>
+                    <option value="L">L</option>
+                    <option value="M">M</option>
+                    <option value="N">N</option>
+                    <option value="O">O</option>
+                    <option value="P">P</option>
+                    <option value="Q">Q</option>
+                    <option value="R">R</option>
+                    <option value="S">S</option>
+                    <option value="T">T</option>
+                    <option value="U">U</option>
+                    <option value="V">V</option>
+                    <option value="W">W</option>
+                    <option value="X">X</option>
+                    <option value="Y">Y</option>
+                    <option value="Z">Z</option>
+            </td>
+
+            <td colspan="2" style="background-color: #FFF2CC; vertical-align: centre; width: 200px" >
+                <h2>Current Score: <span id="score" style="color: red;">0</span></h2>
+                
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="3" style="background-color : #99FF99; border-right: #99FF99;" >
+                <button id="startButton" onclick="startGame()">Start Game Button</button>
+            </td>
+            
+            <td colspan="3" style="background-color: #99FF99; border-left: #99FF99;">
+                <button id="endButton" onclick="endGame()">End Game Button</button>
+            </td>
+        </tr>
+    
+    
+        <tr>
+            <td colspan="2" id="firstAlphabet"  onclick="getScore(this.innerHTML)" style="cursor: pointer; color: #0000FF; font-size: 20px; height: 100px;">
+                &lt;1<sup>st</sup> alphabet&gt;
+            </td>
+
+            <td colspan="2" id="secondAlphabet"  onclick="getScore(this.innerHTML)" style="cursor: pointer; color: #C45911; font-size: 20px;">
+                &lt;2<sup>nd</sup> alphabet&gt;
+            </td>
+
+            <td colspan="2" id="thirdAlphabet"  onclick="getScore(this.innerHTML)" style="cursor: pointer; color: #FF10FF; font-size: 20px;">
+                &lt;3<sup>rd</sup> alphabet&gt;
+            </td>
+        </tr>
+    </table>    
+    
+    
+    <script>
+
+
+        function startGame() {
+
+            score = 0; // Reset score to 0
+            document.getElementById("score").innerHTML = score;
+            // Disable the start button
+            document.getElementById("alphabetSelect").disabled = true;
+            document.getElementById("startButton").disabled = true;
+            document.getElementById("alphabet").innerHTML = document.getElementById("alphabetSelect").value;
+
+            document.getElementById("firstAlphabet").setAttribute("onclick", "getScore(this.innerHTML)");
+            document.getElementById("secondAlphabet").setAttribute("onclick", "getScore(this.innerHTML)");
+            document.getElementById("thirdAlphabet").setAttribute("onclick", "getScore(this.innerHTML)");
+
+
+            // Start generating random alphabets every second
+            intervalId = setInterval(generateRandomAlphabets,1000);
+
+        }
+
+
+        function endGame() {
+            document.getElementById("alphabetSelect").disabled = false;
+            document.getElementById("startButton").disabled = false;
+            document.getElementById("firstAlphabet").removeAttribute("onclick");
+            document.getElementById("secondAlphabet").removeAttribute("onclick");
+            document.getElementById("thirdAlphabet").removeAttribute("onclick");
+
+            clearInterval(intervalId);
+
+        }
+
+        function onload(){
+            document.getElementById("firstAlphabet").removeAttribute("onclick");
+            document.getElementById("secondAlphabet").removeAttribute("onclick");
+            document.getElementById("thirdAlphabet").removeAttribute("onclick");
+        }
+        onload()
+
+        function generateRandomAlphabets() {
+
+            let alphabets = []
+
+            while (alphabets.length < 3) {
+                let randomAlphabet = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Generate a random uppercase alphabet
+                
+                if (!alphabets.includes(randomAlphabet)) {
+                    alphabets.push(randomAlphabet);
+                }
+            }
+            
+            document.getElementById("firstAlphabet").innerHTML = alphabets[0];
+            document.getElementById("secondAlphabet").innerHTML = alphabets[1];
+            document.getElementById("thirdAlphabet").innerHTML = alphabets[2];
+
+        }
+
+
+        let score = 0
+        function getScore(clickedAlphabet) {
+            let chosenAlphabet = document.getElementById("alphabet").innerHTML
+
+
+            if (clickedAlphabet === chosenAlphabet) {
+                score += 4; // Correct guess, add 4 points
+            } else {
+                score -= 2; // Incorrect guess, deduct 2 points
+            }
+
+            document.getElementById("score").innerHTML = score;
+
+        }
+
+
+    </script>
+
+</body>
+
+
+</html>
